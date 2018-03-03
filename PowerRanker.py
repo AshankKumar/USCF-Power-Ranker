@@ -52,27 +52,27 @@ def get_credentials():
     return credentials
 
 def get_rating(idNum):
-
-    uscf = "http://www.uschess.org/msa/MbrDtlMain.php?"
+    uscf = "http://www.uschess.org/msa/thin.php?"
 
     page = urllib2.urlopen(uscf+idNum)
 
     soup = BeautifulSoup(page, 'html.parser')
 
-    bTags = []
+    values = []
 
-    for i in soup.findAll("b"):
-        bTags.append(i.text)
+    for input in soup.findAll('input'):
+        if input.has_attr('value'):
+            values.append(input['value'])
 
+    rating = str (values[5])
 
-    rating = str (bTags[2]) #change method
-    rating = rating.strip()
-    rating = rating.rstrip() #maybe not necesarry
-
-    if "\n" not in rating:
+    if "*" in rating:
+        rating = rating[0 : rating.index("*")]
+        return rating
+    elif "/" in rating:
+        rating = rating[0 : rating.index("/")]
         return rating
     else:
-        rating = rating[0:rating.index("\n")]
         return rating
     
 
