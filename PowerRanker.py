@@ -5,6 +5,8 @@ import os
 import urllib.request as urllib2
 from bs4 import BeautifulSoup
 
+from Player import Player
+
 from apiclient import discovery
 from oauth2client import client
 from oauth2client import tools
@@ -68,21 +70,28 @@ def get_rating(idNum):
 
     if "*" in rating:
         rating = rating[0 : rating.index("*")]
-        return rating
+        return int (rating)
     elif "/" in rating:
         rating = rating[0 : rating.index("/")]
-        return rating
+        return int (rating)
     else:
-        return rating
+        return 0 #return zero for players who are unrated for easy sorting
+
     
+def sort_players(people):
+    sortedPlayers = sorted(people, key = lambda people: people.rating, reverse = True)
+
+    #change all ratings at zero back to unrated
+    for i in people:
+        if(i.get_rating() == "0"):
+            i.set_rating("Unrated")
+
+    return sortedPlayers
 
 def main():
-    """Shows basic usage of the Sheets API.
 
-    Creates a Sheets API service object and prints the names and majors of
-    students in a sample spreadsheet:
-    https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-    """
+    players = []
+    
     credentials = get_credentials()
     http = credentials.authorize(httplib2.Http())
     discoveryUrl = ('https://sheets.googleapis.com/$discovery/rest?'
@@ -99,18 +108,17 @@ def main():
     if not values:
         print('No data found.')
     else:
-        print('Name, Rating:')
         for row in values:
             rate = get_rating(row[1])
-            print('%s, %s' % (row[2], rate)) 
+            players.append(Player(row[2], rate))
+            #print('%s, %s' % (row[2], rate)) 
 
-    #print(names)
-    #print(ratings)      
-    #make list of all the uscf ids
-    #go to http://www.uschess.org/msa/MbrDtlMain.php?[USCF_ID]
-    #get rating
-    #store in list as a player object
-    #sort list
+    sortedPlayers = sort_players(players)
+
+    print('Name, Rating:')
+    for i in sortedPlayers:
+        print(i)
+
     #write to google sheet
 
 if __name__ == '__main__':
