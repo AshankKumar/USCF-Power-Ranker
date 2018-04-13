@@ -50,7 +50,7 @@ def sort_players(people):
 def main():
     gc = gspread.authorize(get_credentials())
 
-    wks = gc.open("HSN Chess Club POWER RANKINGS 2017-2018").get_worksheet(1)
+    wks = gc.open("HSN Chess Club POWER RANKINGS 2017-2018").get_worksheet(0)
 
     list_of_lists = wks.get_all_values()
 
