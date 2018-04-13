@@ -81,9 +81,6 @@ def main():
             j += 1
         wks.update_cells(cell_list)
         
-    #print('ID, Name, Rating:')
-    #for i in sortedPlayers:
-        #print(i)
 
 if __name__ == '__main__':
     main()
