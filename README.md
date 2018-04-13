@@ -21,3 +21,9 @@ To:
 ```Python
 wks = gc.open("NAME OF YOUR SPREADSHEET HERE").get_worksheet(0)
 ```
+
+Run the script every month when USCF ratings are officialy updated and the script will handle the ordering of all the players for you!
+
+# To Do
+
+Implement a column that displays the change in a players rank from last month and create a different input of players method and output of players rankings so a google spreadsheets api is not necessary
