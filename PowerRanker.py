@@ -75,7 +75,7 @@ def main():
         cell_list = wks.range(cells)
         j = 1 #player = people.pop()
         player = sortedPlayers.pop(0) #change naming
-        print(player)
+        #print(player)
         for cell in cell_list:
             if(j == 1):
                 cell.value = player.get_idNum() #id people.get_ID()
