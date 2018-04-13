@@ -64,25 +64,20 @@ def main():
 
     sortedPlayers = sort_players(players)
 
-    print(sortedPlayers)
-
-    #current method is hard coded, need to change to any amount of players
-    #implement change from last week
-    for i in range(2, 32): #list_of_lists = wks.get_all_values(), then len(list_of_lists)
+    for i in range(2, len(sortedPlayers)+2): #+2 for the format of the spreadsheet
         num = str (i)
         cells = 'B'+num+":"+'D'+num
         #print(cells)
         cell_list = wks.range(cells)
         j = 1 #player = people.pop()
         player = sortedPlayers.pop(0) #change naming
-        #print(player)
         for cell in cell_list:
             if(j == 1):
-                cell.value = player.get_idNum() #id people.get_ID()
+                cell.value = player.get_idNum() #uscf id: people.get_ID()
             if(j == 2):
-                cell.value = player.get_name() #name people.get_name()
+                cell.value = player.get_name() #name: people.get_name()
             if(j == 3):
-                cell.value = player.get_rating() #rating people.get_rating()
+                cell.value = player.get_rating() #rating: people.get_rating()
             j += 1
         wks.update_cells(cell_list)
         
